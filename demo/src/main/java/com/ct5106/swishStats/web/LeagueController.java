@@ -9,11 +9,11 @@ import com.ct5106.swishStats.domain.League;
 import com.ct5106.swishStats.repository.LeagueRepository;
 
 @RestController
-public class ConferenceController {
+public class LeagueController {
     private final LeagueRepository leagueRepository;
     private final TeamRepository teamRepository;
 
-    public ConferenceController(LeagueRepository leagueRepository, TeamRepository teamRepository) {
+    public LeagueController(LeagueRepository leagueRepository, TeamRepository teamRepository) {
         this.leagueRepository = leagueRepository;
         this.teamRepository = teamRepository;
     }
