@@ -11,10 +11,12 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long playerId;
 
-    private String playerName;
+    private String firstName;
+    private String lastName;
     private String position;
     private int age;
     private int playerRating;
+    
 
     @ManyToOne
     @JoinColumn(name = "team_id")
@@ -23,9 +25,10 @@ public class Player {
     public Player() {
     }
 
-    public Player(String playerName, String position, int age, int playerRating) {
+    public Player(String firstName, String lastName, String position, int age, int playerRating) {
         super();
-        this.playerName = playerName;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.position = position;
         this.age = age;
         this.playerRating = playerRating;
@@ -34,15 +37,19 @@ public class Player {
     public Long getPlayerId() {
         return playerId;
     }
-    public void setPlayerId(Long playerId) {
-        this.playerId = playerId;
-    }
 
-    public String getPlayerName() {
-        return playerName;
+    public String getLastName() {
+        return lastName;
     }
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getPosition() {
