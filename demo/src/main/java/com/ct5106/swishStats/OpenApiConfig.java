@@ -1,4 +1,4 @@
-package com.ct5106.carsv2.demo;
+package com.ct5106.swishStats;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,6 @@ public class OpenApiConfig
     {
         return new OpenAPI().info(new Info()
 
-                .title("Car REST API").description("My car stock").version("1.0"));
+                .title("NBA REST API").description("NBA Stats").version("1.0"));
     }
 }
