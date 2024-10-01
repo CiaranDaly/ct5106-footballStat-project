@@ -5,22 +5,22 @@ import com.ct5106.swishStats.repository.TeamRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ct5106.swishStats.domain.Conference;
-import com.ct5106.swishStats.repository.ConferenceRepository;
+import com.ct5106.swishStats.domain.League;
+import com.ct5106.swishStats.repository.LeagueRepository;
 
 @RestController
 public class ConferenceController {
-    private final ConferenceRepository conferenceRepository;
+    private final LeagueRepository leagueRepository;
     private final TeamRepository teamRepository;
 
-    public ConferenceController(ConferenceRepository conferenceRepository, TeamRepository teamRepository) {
-        this.conferenceRepository = conferenceRepository;
+    public ConferenceController(LeagueRepository leagueRepository, TeamRepository teamRepository) {
+        this.leagueRepository = leagueRepository;
         this.teamRepository = teamRepository;
     }
 
     @GetMapping("/conferences")
-    public Iterable<Conference> getAllConferences() {
-        return conferenceRepository.findAll();
+    public Iterable<League> getAllConferences() {
+        return leagueRepository.findAll();
     }
 
     @GetMapping("/teams")

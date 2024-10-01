@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-public class Conference
+public class League
 {
 
     @Id
@@ -15,14 +15,14 @@ public class Conference
 
     private String name;
 
-    @OneToMany(mappedBy = "conference", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
     private List<Team> teams;
-    public Conference()
+    public League()
     {
         // super();
     }
 
-    public Conference(String name)
+    public League(String name)
     {
         super();
         this.name = name;

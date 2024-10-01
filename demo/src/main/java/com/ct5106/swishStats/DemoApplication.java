@@ -1,9 +1,9 @@
 package com.ct5106.swishStats;
 
-import com.ct5106.swishStats.domain.Conference;
+import com.ct5106.swishStats.domain.League;
 import com.ct5106.swishStats.domain.Team;
 import com.ct5106.swishStats.repository.TeamRepository;
-import com.ct5106.swishStats.repository.ConferenceRepository;
+import com.ct5106.swishStats.repository.LeagueRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -13,13 +13,13 @@ import org.springframework.boot.CommandLineRunner;
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner
 {
-	private final ConferenceRepository conferenceRepository;
+	private final LeagueRepository leagueRepository;
 	private final TeamRepository teamRepository;
 	private static final Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
-	public DemoApplication(ConferenceRepository conferenceRepository, TeamRepository teamRepository)
+	public DemoApplication(LeagueRepository leagueRepository, TeamRepository teamRepository)
 	{
-		this.conferenceRepository = conferenceRepository;
+		this.leagueRepository = leagueRepository;
 		this.teamRepository = teamRepository;
 	}
 
@@ -32,27 +32,27 @@ public class DemoApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception
 	{
-		Conference west = new Conference("West");
-		Conference east = new Conference("East");
-		conferenceRepository.save(west);
-		conferenceRepository.save(east);
+		League PremierLeague = new League("Premier League");
+		League Championship = new League("Championship");
+		leagueRepository.save(PremierLeague);
+		leagueRepository.save(Championship);
 
-		Team lakers = new Team("Dallas Mavericks", 5, 50, 32, 83);
-		lakers.setConference(west);
-		teamRepository.save(lakers);
+		Team manchesterCity = new Team("Manchester City", 2, 4,2, 0, 2101);
+		manchesterCity.setConference(PremierLeague);
+		teamRepository.save(manchesterCity);
 
-		Team celtics = new Team("Boston Celtics", 1, 64, 18, 85);
-		celtics.setConference(east);
-		teamRepository.save(celtics);
+		Team watford = new Team("Watford", 7, 4,1, 2, 1413);
+		watford.setConference(Championship);
+		teamRepository.save(watford);
 
 //Fetch both conferences and log to console
-		for (Conference conference : conferenceRepository.findAll())
+		for (League league : leagueRepository.findAll())
 		{
-			logger.info("name: {}", conference.getName());
+			logger.info("name: {}", league.getName());
 		}
 
 		for (Team team : teamRepository.findAll()) {
-			logger.info("Team: {}, Conference: {}, Standing: {}, Wins: {}, Losses: {}, Rating: {}", team.getTeamname(), team.getConference().getName(), team.getStanding(), team.getWins(), team.getLosses(), team.getTeamRating());
+			logger.info("Team: {}, League: {}, Standing: {}, Wins: {}, Losses: {}, Rating: {}", team.getTeamname(), team.getConference().getName(), team.getStanding(), team.getWins(), team.getLosses(), team.getTeamRating());
 		}
 	}
 }
