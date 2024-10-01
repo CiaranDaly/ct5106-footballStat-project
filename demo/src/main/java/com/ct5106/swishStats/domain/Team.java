@@ -43,9 +43,6 @@ public class Team
         return teamid;
     }
 
-    public void setTeamid(Long teamid) {
-        this.teamid = teamid;
-    }
 
     public String getTeamname() {
         return teamname;
@@ -95,11 +92,11 @@ public class Team
     }
 
 
-    public League getConference() {
+    public League getLeague() {
         return league;
     }
 
-    public void setConference(League league) {
+    public void setLeague(League league) {
         this.league = league;
     }
 }

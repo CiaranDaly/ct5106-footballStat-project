@@ -18,13 +18,13 @@ public class LeagueController {
         this.teamRepository = teamRepository;
     }
 
-    @GetMapping("/conferences")
+    @GetMapping("/leagues")
     public Iterable<League> getAllConferences() {
         return leagueRepository.findAll();
     }
 
-    @GetMapping("/teams")
-    public Iterable<Team> getAllTeams() {
+    @GetMapping("/league/teams")
+    public Iterable<Team> getAllTeamsForLeague() { //list all teams that are in a league
         return teamRepository.findAll();
     }
 }
