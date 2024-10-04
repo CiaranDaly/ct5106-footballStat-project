@@ -44,9 +44,13 @@ public class DemoApplication implements CommandLineRunner
 		League PremierLeague = new League("Premier League");
 		League Championship = new League("Championship");
 		League MLS = new League("Major League Soccer");
+		League bundesliga = new League("Bundesliga");
+		League serieA= new League("Serie A");
 		leagueRepository.save(PremierLeague);
 		leagueRepository.save(Championship);
 		leagueRepository.save(MLS);
+		leagueRepository.save(bundesliga);
+		leagueRepository.save(serieA);
 
 		Team manchesterCity = new Team("Manchester City", 2, 4, 2, 0, 2101);
 		manchesterCity.setLeague(PremierLeague);
@@ -59,6 +63,29 @@ public class DemoApplication implements CommandLineRunner
 		Team interMiami = new Team("Inter Miami", 1, 19, 8, 4, 1806);
 		interMiami.setLeague(MLS);
 		teamRepository.save(interMiami);
+		
+		Team laGalaxy = new Team("LA Galaxy", 5, 11, 9, 9, 1783);
+		laGalaxy.setLeague(MLS);
+		teamRepository.save(laGalaxy);
+		
+		Team liverpool = new Team("Liverpool", 3, 4, 3, 1, 2096);
+		liverpool.setLeague(PremierLeague);
+		teamRepository.save(liverpool);
+		
+		Team manU = new Team("Manchester United", 6, 1, 3, 4, 1806);
+		interMiami.setLeague(MLS);
+		teamRepository.save(interMiami);
+		
+		Team arsenal = new Team("Arsenal", 1, 19, 8, 4, 1806);
+		interMiami.setLeague(MLS);
+		teamRepository.save(interMiami);
+		
+		Team tottenham = new Team("Totenham", 1, 19, 8, 4, 1806);
+		interMiami.setLeague(MLS);
+		teamRepository.save(interMiami);
+		
+
+		
 		
 		Player haaland = new Player("Erling", "Haaland", "Striker", 24, 91);
 		haaland.setTeam(manchesterCity);
