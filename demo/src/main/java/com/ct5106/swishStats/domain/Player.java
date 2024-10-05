@@ -20,6 +20,7 @@ public class Player {
 
     @ManyToOne
     @JoinColumn(name = "team_id")
+    @JsonIgnoreProperties({"players", "manager"})
     private Team team;
 
     public Player() {

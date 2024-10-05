@@ -1,6 +1,7 @@
 package com.ct5106.swishStats.web;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ct5106.swishStats.domain.League;
@@ -9,6 +10,8 @@ import com.ct5106.swishStats.domain.Player;
 import com.ct5106.swishStats.repository.LeagueRepository;
 import com.ct5106.swishStats.repository.TeamRepository;
 import com.ct5106.swishStats.repository.PlayerRepository;
+
+import java.util.List;
 
 @RestController
 public class TeamController {
@@ -24,9 +27,15 @@ public class TeamController {
     }
 
     @GetMapping("/teams")
-    public Iterable<Team> getAllTeams() {
-        return teamRepository.findAll();
-    }
+    public Iterable<Team> getAllTeams(
+        @RequestParam(required = false) Integer minRating,
+        @RequestParam(required = false) Integer maxRating) {
+            if (minRating != null && maxRating != null) {
+                return teamRepository.findByTeamRatingRange(minRating, maxRating);
+            } else {
+                return teamRepository.findAll();
+            }
+        }
     
     @GetMapping("/team/players")
     public Iterable<Player> getAllPlayersForTeam() { //get all players that have a team

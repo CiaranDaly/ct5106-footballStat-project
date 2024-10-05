@@ -1,6 +1,7 @@
 package com.ct5106.swishStats.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class League
     private String name;
 
     @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("league")
     private List<Team> teams;
     public League()
     {

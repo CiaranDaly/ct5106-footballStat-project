@@ -73,16 +73,16 @@ public class DemoApplication implements CommandLineRunner
 		teamRepository.save(liverpool);
 		
 		Team manU = new Team("Manchester United", 6, 1, 3, 4, 1806);
-		interMiami.setLeague(MLS);
-		teamRepository.save(interMiami);
+		manU.setLeague(PremierLeague);
+		teamRepository.save(manU);
 		
 		Team arsenal = new Team("Arsenal", 1, 19, 8, 4, 1806);
-		interMiami.setLeague(MLS);
-		teamRepository.save(interMiami);
+		arsenal.setLeague(PremierLeague);
+		teamRepository.save(arsenal);
 		
-		Team tottenham = new Team("Totenham", 1, 19, 8, 4, 1806);
-		interMiami.setLeague(MLS);
-		teamRepository.save(interMiami);
+		Team tottenham = new Team("Tottenham", 1, 19, 8, 4, 1806);
+		tottenham.setLeague(PremierLeague);
+		teamRepository.save(tottenham);
 		
 
 		
@@ -99,6 +99,10 @@ public class DemoApplication implements CommandLineRunner
 		Manager pepGuardiola = new Manager("Pep", "Guardiola", "Spain", 94);
 		pepGuardiola.setTeam(manchesterCity);
 		managerRepository.save(pepGuardiola);
+
+		Manager gerardoMartino = new Manager("Gerardo", "Martino", "Argentina", 79);
+		gerardoMartino.setTeam(interMiami);
+		managerRepository.save(gerardoMartino);
 		
 
 //Fetch both conferences and log to console
@@ -108,15 +112,15 @@ public class DemoApplication implements CommandLineRunner
 		}
 
 		for (Team team : teamRepository.findAll()) {
-			logger.info("Team: {}, League: {}, Standing: {}, Wins: {}, Losses: {}, Rating: {}", team.getTeamname(), team.getLeague().getName(), team.getStanding(), team.getWins(), team.getLosses(), team.getTeamRating());
+			logger.info("Team: {}, League: {}, Standing: {}, Wins: {}, Losses: {}, Rating: {}", team.getTeamName(), team.getLeague().getName(), team.getStanding(), team.getWins(), team.getLosses(), team.getTeamRating());
 		}
 		
 		for (Player player : playerRepository.findAll()) {
-			logger.info("first name: {}, last name: {}, position: {}, age: {}, team: {}, Rating: {}", player.getFirstName(), player.getLastName(), player.getPosition(), player.getAge(), player.getTeam().getTeamname(), player.getPlayerRating());
+			logger.info("first name: {}, last name: {}, position: {}, age: {}, team: {}, Rating: {}", player.getFirstName(), player.getLastName(), player.getPosition(), player.getAge(), player.getTeam().getTeamName(), player.getPlayerRating());
 		}
 		
 		for (Manager manager : managerRepository.findAll()) {
-			logger.info("first name: {}, last name: {}, nationality: {}, team: {}, manager rating: {}", manager.getFirstName(), manager.getLastName(), manager.getNationality(), manager.getTeam().getTeamname(), manager.getManagerRating());
+			logger.info("first name: {}, last name: {}, nationality: {}, team: {}, manager rating: {}", manager.getFirstName(), manager.getLastName(), manager.getNationality(), manager.getTeam().getTeamName(), manager.getManagerRating());
 		}
 	}
 }

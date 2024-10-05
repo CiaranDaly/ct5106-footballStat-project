@@ -13,6 +13,6 @@ public class OpenApiConfig
     {
         return new OpenAPI().info(new Info()
 
-                .title("NBA REST API").description("NBA Stats").version("1.0"));
+                .title("FOOTBALL STATS REST API").description("Football Stats").version("1.0"));
     }
 }
