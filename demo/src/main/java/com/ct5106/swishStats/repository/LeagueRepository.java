@@ -16,7 +16,8 @@ public interface LeagueRepository extends CrudRepository<League, Long>
 
     List<League> findByName (String name);
     
-    @Query("select l from League l join l.teams t where t.teamname like %:team%")
-    List<League> findByTeamContaining(@Param("team") String team);
-
+//    @Query("select l from League l join l.teams t where t.teamName like %:team%")
+//    List<League> findByTeamContaining(@Param("team") String team);
+@Query("select distinct l from League l join l.teams t where lower(t.teamName) like lower(concat('%', :team, '%'))")
+List<League> findByTeamContaining(@Param("team") String team);
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Team
@@ -13,29 +15,36 @@ public class Team
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long teamid;
 
-    private String teamname;
+    private String teamName;
     private int standing;
     private int wins;
     private int draws;
     private int losses;
-    private int teamrating;
+    private int teamRating;
 
     @ManyToOne
     @JoinColumn(name = "league_id")
     private League league;
 
+    @OneToMany(mappedBy = "team")
+    @JsonIgnoreProperties("team")
+    private List<Player> players;
+
+    @OneToOne(mappedBy = "team")
+    @JsonIgnoreProperties("team")
+    private Manager manager;
     public Team()
     {
     }
-    public Team(String teamname, int standing, int wins, int draws, int losses, int rating)
+    public Team(String teamName, int standing, int wins, int draws, int losses, int rating)
     {
         super();
-        this.teamname = teamname;
+        this.teamName = teamName;
         this.standing = standing;
         this.wins = wins;
         this.losses = losses;
         this.draws = draws;
-        this.teamrating = rating;
+        this.teamRating = rating;
 
     }
 
@@ -44,12 +53,12 @@ public class Team
     }
 
 
-    public String getTeamname() {
-        return teamname;
+    public String getTeamName() {
+        return teamName;
     }
 
-    public void setTeamname(String teamname) {
-        this.teamname = teamname;
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public int getStanding() {
@@ -77,11 +86,11 @@ public class Team
     }
 
     public int getTeamRating() {
-        return teamrating;
+        return teamRating;
     }
 
-    public void setTeamrating(int teamrating) {
-        this.teamrating = teamrating;
+    public void setTeamRating(int teamRating) {
+        this.teamRating = teamRating;
     }
     public int getDraws() {
         return draws;
