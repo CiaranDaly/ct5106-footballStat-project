@@ -4,10 +4,13 @@ import com.ct5106.swishStats.domain.Player;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-// grr!
+@CrossOrigin
+@RepositoryRestResource
 public interface PlayerRepository extends CrudRepository<Player, Long> {
     // fetch players by position
     List<Player> findPlayerByPosition(String position);
