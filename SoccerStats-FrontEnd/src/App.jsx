@@ -21,10 +21,10 @@ function App() {
       // Shares profile data with Display and Form components
       //<ProfileContext.Provider value = {{profile, setProfile}}>
           <div>
-            <LeagueTable />
-            <TeamsTable />
-            <PlayersTable />
-            <ManagersTable />
+              <LeagueTable /> <br/>
+              <TeamsTable /> <br/>
+            <PlayersTable /> <br/>
+            <ManagersTable /> <br/>
           </div>
       //</ProfileContext.Provider>
   );

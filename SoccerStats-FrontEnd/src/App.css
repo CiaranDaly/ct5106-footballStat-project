@@ -40,3 +40,46 @@
 .read-the-docs {
   color: #888;
 }
+
+
+
+.soccerTables{
+  /*
+  For each of the components:
+
+  Add curved border
+  Space between the border and the content
+  Some random dark purple colour
+   */
+  border: 1px solid;
+  padding: 15px;
+  margin: 20px;
+  background-color: #3e1f5c;
+  /*font-family: "Comic Sans MS";*/
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid;
+    background-color: rebeccapurple;
+}
+
+th {
+    padding: 10px;
+    background-color: #3e1f5c;
+    font-size: 25px;
+    background-color: #4c0b83;
+    border: solid 1px;
+}
+
+td {
+    padding: 10px;
+    font-size: 20px;
+    border: solid 1px;
+}
+
+p {
+    font-size: 50px;
+    font-weight: bold;
+}
