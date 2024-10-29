@@ -28,28 +28,28 @@ const ManagersTable = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
+        <div className="soccerTables">
             <h1>Managers</h1>
             <table>
                 <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Nationality</th>
-                        <th>Manager Rating</th>
-                    </tr>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Nationality</th>
+                    <th>Manager Rating</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {managers.map((manager, index) => (
-                        <React.Fragment key={index}>
-                            <tr>
-                                <td>{manager.firstName}</td>
-                                <td>{manager.lastName}</td>
-                                <td>{manager.nationality}</td>
-                                <td>{manager.managerRating}</td>
-                            </tr>
-                        </React.Fragment>
-                    ))}
+                {managers.map((manager, index) => (
+                    <React.Fragment key={index}>
+                        <tr>
+                            <td>{manager.firstName}</td>
+                            <td>{manager.lastName}</td>
+                            <td>{manager.nationality}</td>
+                            <td>{manager.managerRating}</td>
+                        </tr>
+                    </React.Fragment>
+                ))}
                 </tbody>
             </table>
         </div>

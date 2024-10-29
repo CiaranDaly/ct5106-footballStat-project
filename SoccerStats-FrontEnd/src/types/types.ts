@@ -2,7 +2,7 @@
 export interface League {
     id: number;
     name: string;
-    teams: Team[]; // Array of Team entities associated with the league
+    teams?: Team[]; // Array of Team entities associated with the league
 }
 
 // Team interface
@@ -15,7 +15,7 @@ export interface Team {
     losses: number;
     teamRating: number;
     league?: League; // Optional League entity (to avoid circular dependency issues)
-    players: Player[]; // Array of Player entities associated with the team
+    players?: Player[]; // Array of Player entities associated with the team
     manager?: Manager; // Optional Manager entity associated with the team
 }
 

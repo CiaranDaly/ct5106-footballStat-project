@@ -1,13 +1,11 @@
 // src/components/LeagueTable.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import TeamTable from './TeamsTable';
 
 const LeagueTable = () => {
     const [leagues, setLeagues] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [selectedLeague, setSelectedLeague] = useState(null);
 
     useEffect(() => {
         const fetchLeagues = async () => {
@@ -29,7 +27,7 @@ const LeagueTable = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
+        <div className = "soccerTables">
             <h1>Leagues</h1>
             <table>
                 <thead>

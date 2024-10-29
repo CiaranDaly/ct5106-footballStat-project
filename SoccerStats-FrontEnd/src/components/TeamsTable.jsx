@@ -28,32 +28,32 @@ const TeamsTable = () => {
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
+        <div className="soccerTables">
             <h1>Teams</h1>
             <table>
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Standing</th>
-                        <th>Wins</th>
-                        <th>Draws</th>
-                        <th>Losses</th>
-                        <th>Team Rating</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Standing</th>
+                    <th>Wins</th>
+                    <th>Draws</th>
+                    <th>Losses</th>
+                    <th>Team Rating</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {teams.map((team, index) => (
-                        <React.Fragment key={index}>
-                            <tr>
-                                <td>{team.teamName}</td>
-                                <td>{team.standing}</td>
-                                <td>{team.wins}</td>
-                                <td>{team.draws}</td>
-                                <td>{team.losses}</td>
-                                <td>{team.teamRating}</td>
-                            </tr>
-                        </React.Fragment>
-                    ))}
+                {teams.map((team, index) => (
+                    <React.Fragment key={index}>
+                        <tr>
+                            <td>{team.teamName}</td>
+                            <td>{team.standing}</td>
+                            <td>{team.wins}</td>
+                            <td>{team.draws}</td>
+                            <td>{team.losses}</td>
+                            <td>{team.teamRating}</td>
+                        </tr>
+                    </React.Fragment>
+                ))}
                 </tbody>
             </table>
         </div>

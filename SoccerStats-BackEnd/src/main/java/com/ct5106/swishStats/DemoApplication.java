@@ -46,11 +46,13 @@ public class DemoApplication implements CommandLineRunner
 		League MLS = new League("Major League Soccer");
 		League bundesliga = new League("Bundesliga");
 		League serieA= new League("Serie A");
+		League SPL = new League("Scottish Premier League");
 		leagueRepository.save(PremierLeague);
 		leagueRepository.save(Championship);
 		leagueRepository.save(MLS);
 		leagueRepository.save(bundesliga);
 		leagueRepository.save(serieA);
+		leagueRepository.save(SPL);
 
 		Team manchesterCity = new Team("Manchester City", 2, 4, 2, 0, 2101);
 		manchesterCity.setLeague(PremierLeague);
@@ -76,13 +78,17 @@ public class DemoApplication implements CommandLineRunner
 		manU.setLeague(PremierLeague);
 		teamRepository.save(manU);
 		
-		Team arsenal = new Team("Arsenal", 1, 19, 8, 4, 1806);
+		Team arsenal = new Team("Arsenal", 8, 19, 8, 4, 1806);
 		arsenal.setLeague(PremierLeague);
 		teamRepository.save(arsenal);
 		
-		Team tottenham = new Team("Tottenham", 1, 19, 8, 4, 1806);
+		Team tottenham = new Team("Tottenham", 9, 19, 8, 4, 1806);
 		tottenham.setLeague(PremierLeague);
 		teamRepository.save(tottenham);
+
+		Team celtic = new Team("Celtic", 1, 100, 0, 0, 9999);
+		celtic.setLeague(SPL);
+		teamRepository.save(celtic);
 		
 
 		
@@ -95,6 +101,10 @@ public class DemoApplication implements CommandLineRunner
 		Player messi = new Player("Lionel", "Messi", "Centre Forward", 35, 88);
 		messi.setTeam(interMiami);
 		playerRepository.save(messi);
+
+		Player samaras = new Player("Georgios", "Samaras", "Forward", 39, 77);
+		samaras.setTeam(celtic);
+		playerRepository.save(samaras);
 		
 		Manager pepGuardiola = new Manager("Pep", "Guardiola", "Spain", 94);
 		pepGuardiola.setTeam(manchesterCity);
