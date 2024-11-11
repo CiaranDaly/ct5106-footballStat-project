@@ -16,7 +16,7 @@ public class League
 
     private String name;
 
-    @OneToMany(mappedBy = "league", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "league", cascade = CascadeType.DETACH)
     @JsonIgnoreProperties("league")
     private List<Team> teams;
     public League()

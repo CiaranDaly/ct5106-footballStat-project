@@ -18,7 +18,7 @@ public class Player {
     private int playerRating;
     
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "team_id")
     @JsonIgnoreProperties({"players", "manager"})
     private Team team;

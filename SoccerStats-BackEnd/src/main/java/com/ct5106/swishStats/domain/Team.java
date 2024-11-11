@@ -22,15 +22,15 @@ public class Team
     private int losses;
     private int teamRating;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "league_id")
     private League league;
 
-    @OneToMany(mappedBy = "team")
+    @OneToMany(mappedBy = "team", cascade = CascadeType.DETACH)
     @JsonIgnoreProperties("team")
     private List<Player> players;
 
-    @OneToOne(mappedBy = "team")
+    @OneToOne(mappedBy = "team", cascade = CascadeType.DETACH)
     @JsonIgnoreProperties("team")
     private Manager manager;
     public Team()

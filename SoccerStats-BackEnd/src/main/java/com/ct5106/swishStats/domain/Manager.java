@@ -15,7 +15,7 @@ public class Manager {
     private String nationality;
     private int managerRating;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.DETACH)
     @JoinColumn(name = "team_id")
     private Team team;
 
