@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const ManagersTable = () => {
+    // state vars to manage managers (?) loading error etc
     const [managers, setManagers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,39 +21,48 @@ const ManagersTable = () => {
         }
         return null;
     };
+
+    // fetches list of managers from the backend, updates manager state
     const fetchManagers = async () => {
         try {
+            // get request to the backend
             const response = await axios.get('http://localhost:8080/api/managers');
             console.log("response.data._embedded.managers: ", response.data._embedded.managers);
-            setManagers(response.data._embedded?.managers || []); //either populkate the array or if data is missing set an empty array
+            setManagers(response.data._embedded?.managers || []); //either populate the array or if data is missing set an empty array
             setLoading(false);
         } catch (err) {
             setError('Error fetching managers');
             setLoading(false);
         }
     };
-    useEffect(() => {
 
+    useEffect(() => {
         fetchManagers();
     }, []);
+    // handles form submission for create / update managers
     const handleSubmit = async (e) => {
+        // prevent default form submission (refresh)
         e.preventDefault();
         setLoading(true);
         try {
             if (isEditing) {
+                // Updating existing manager with PUT request
                 const managerssId = extractIdFromLink(currentManager);
                 const response = await axios.put(
                     `http://localhost:8080/api/managers/${managersId}`,
                     currentManager,
 
                 );
+                // if update is successful, fetch managers again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchMangers();
                     setIsDialogOpen(false);
                     setCurrentManager({ name: '' });
                     setIsEditing(false);
                 }
-            } else {
+            }
+            else {
+                // otherwise, create new manager with POST request
                 const response = await axios.post(
                     'http://localhost:8080/api/managers',
                     currentManager,
@@ -63,6 +73,7 @@ const ManagersTable = () => {
                         }
                     }
                 );
+                // if create is successful, fetch managers again, close dialog and reset state
                 if (response.status === 201 || response.status === 200) {
                     await fetchManagers();
                     setIsDialogOpen(false);
@@ -76,17 +87,23 @@ const ManagersTable = () => {
             setLoading(false);
         }
     };
+    // handles delete manager
     const handleDelete = async (manager) => {
+        // confirm delete with user
         if (window.confirm('Are you sure you want to delete this manager?')) {
             setLoading(true);
             try {
+                // get manager ID to delete
                 const managersId = extractIdFromLink(manager); // need id to delete the manager
+                // if no ID found, throw error
                 if (!managersId) {
                     throw new Error('Could not find manager ID');
                 }
+                // delete manager with DELETE request
                 const response = await axios.delete(
                     `http://localhost:8080/api/managers/${managersId}`,
                 );
+                // if delete is successful, fetch managers again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchManagers();
                     setError(null);
@@ -99,6 +116,8 @@ const ManagersTable = () => {
             }
         }
     };
+
+    // opens dialog for editing manager
     const openEditDialog = (manager) => {
         setCurrentManager({
             ...manager,
@@ -108,6 +127,7 @@ const ManagersTable = () => {
         setIsDialogOpen(true);
     };
 
+    // opens dialog for creating new manager
     const openCreateDialog = () => {
         setCurrentManager({ name: '' });
         setIsEditing(false);

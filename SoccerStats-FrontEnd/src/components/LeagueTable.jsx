@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const LeagueTable = () => {
+    // state vars to manage leagues loading error etc
     const [leagues, setLeagues] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,8 +22,10 @@ const LeagueTable = () => {
         return null;
     };
     // useEffect(() => {
+        // Fetches list of leagues from the backend, updates league state
         const fetchLeagues = async () => {
             try {
+                // get request to the backend
                 const response = await axios.get('http://localhost:8080/api/leagues');
                 console.log("response.data._embedded.leagues: ", response.data._embedded.leagues);
                 setLeagues(response.data._embedded?.leagues || []);
@@ -38,24 +41,29 @@ const LeagueTable = () => {
     }, []);
     // }, []);
 
+    // Handles form submission for create / update leagues
     const handleSubmit = async (e) => {
+        // prevent refreshhn
         e.preventDefault();
         setLoading(true);
         try {
             if (isEditing) {
+                // Updating existing league with PUT request
                 const leagueId = extractIdFromLink(currentLeague);
                 const response = await axios.put(
                     `http://localhost:8080/api/leagues/${leagueId}`, 
                     currentLeague,
-                    
                 );
+                // If update is successful, fetch leagues again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchLeagues();
                     setIsDialogOpen(false);
                     setCurrentLeague({ name: '' });
                     setIsEditing(false);
                 }
-            } else {
+            }
+            else {
+                // otherwise, create new league with POST request
                 const response = await axios.post(
                     'http://localhost:8080/api/leagues', 
                     currentLeague,
@@ -66,6 +74,7 @@ const LeagueTable = () => {
                         }
                     }
                 );
+                // If create is successful, fetch leagues again, close dialog and reset state
                 if (response.status === 201 || response.status === 200) {
                     await fetchLeagues();
                     setIsDialogOpen(false);
@@ -80,17 +89,23 @@ const LeagueTable = () => {
         }
     };
 
+    // Handles deletion of a league
     const handleDelete = async (league) => {
+        // Confirm with user before deleting
         if (window.confirm('Are you sure you want to delete this league?')) {
             setLoading(true);
             try {
+                // Gets league ID for deleting the league
                 const leagueId = extractIdFromLink(league); // 'undefined ID' error deleting without this. 
+                // If league ID is not found, throw an error
                 if (!leagueId) {
                     throw new Error('Could not find league ID');
                 }
+                // Send DELETE request to backend
                 const response = await axios.delete(
                     `http://localhost:8080/api/leagues/${leagueId}`,
                 );
+                // If delete is successful, fetch leagues again and reset error
                 if (response.status === 200 || response.status === 204) {
                     await fetchLeagues();
                     setError(null);
@@ -103,6 +118,7 @@ const LeagueTable = () => {
         }
     };
 
+    // Open dialog for editing league
     const openEditDialog = (league) => {
         setCurrentLeague({
             ...league,
@@ -112,6 +128,7 @@ const LeagueTable = () => {
         setIsDialogOpen(true);
     };
 
+    // Open dialog for creating new league
     const openCreateDialog = () => {
         setCurrentLeague({ name: '' });
         setIsEditing(false);

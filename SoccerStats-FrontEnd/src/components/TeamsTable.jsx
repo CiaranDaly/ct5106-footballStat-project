@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const TeamsTable = () => {
+    // state vars to manage teams loading error etc
     const [teams, setTeams] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -21,8 +22,10 @@ const TeamsTable = () => {
         };
 
     //useEffect(() => {
+        // Fetches list of teams from the backend, updates team state
         const fetchTeams = async () => {
             try {
+                // get request to the backend
                 const response = await axios.get('http://localhost:8080/api/teams');
                 console.log("response.data._embedded.teams: ", response.data._embedded.teams);
                 setTeams(response.data._embedded?.teams || []); //either populkate the array or if data is missing set an empty array
@@ -37,25 +40,31 @@ const TeamsTable = () => {
         }, []);
     //}, []);
 
+    // Handles form submission for create / update teams
     const handleSubmit = async (e) => {
-        console.log("button clicked");
+        // console.log("button clicked");
+        // prevent refresh
         e.preventDefault();
         setLoading(true);
         try {
             if (isEditing) {
+                // Updating existing team with PUT request
                 const teamId = extractIdFromLink(currentTeam);
                 const response = await axios.put(
                     `http://localhost:8080/api/teams/${teamId}`, 
                     currentTeam,
-                    
                 );
+
+                // If update is successful, fetch teams again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchTeams();
                     setIsDialogOpen(false);
                     setCurrentTeam({ teamName: '', standing: 0, wins: 0, draws: 0, losses:0, teamRating: 0  });
                     setIsEditing(false);
                 }
-            } else {
+            }
+            else {
+                // otherwise, create new team with POST request
                 const response = await axios.post(
                     'http://localhost:8080/api/teams', 
                     currentTeam,
@@ -66,6 +75,7 @@ const TeamsTable = () => {
                         }
                     }
                 );
+                // If create is successful, fetch teams again, close dialog and reset state
                 if (response.status === 201 || response.status === 200) {
                     await fetchTeams();
                     setIsDialogOpen(false);
@@ -81,17 +91,22 @@ const TeamsTable = () => {
         }
     };
 
+    // Handles deletion of a team
     const handleDelete = async (team) => {
+        // hit them with the are you sure buddy
         if (window.confirm('Are you sure you want to delete this team?')) {
             setLoading(true);
             try {
+                // Gets team ID for deleting the team
                 const teamId = extractIdFromLink(team); // 'undefined ID' error deleting without this. 
                 if (!teamId) {
                     throw new Error('Could not find team ID');
                 }
+                // delete request to the backend
                 const response = await axios.delete(
                     `http://localhost:8080/api/teams/${teamId}`,
                 );
+                // If delete is successful, fetch teams again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchTeams();
                     setError(null);
@@ -109,6 +124,7 @@ const TeamsTable = () => {
         }
     };
 
+    // opens the edit dialog for a team
     const openEditDialog = (team) => {
         setCurrentTeam({
             ...team,
@@ -118,6 +134,7 @@ const TeamsTable = () => {
         setIsDialogOpen(true);
     };
 
+    // opens the create dialog for a team
     const openCreateDialog = () => {
         setCurrentTeam({ teamName: '', standing: 0, wins: 0, draws: 0, losses:0, teamRating: 0 });
         setIsEditing(false);

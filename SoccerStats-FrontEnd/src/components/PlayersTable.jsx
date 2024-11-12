@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const PlayersTable = () => {
+    // state vars to manage players loading error etc
     const [players, setPlayers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,8 +21,11 @@ const PlayersTable = () => {
         }
         return null;
     };
+
+    // fetches list of players from the backend, updates player state
     const fetchPlayers = async () => {
         try {
+            // get request to the backend
             const response = await axios.get('http://localhost:8080/api/players');
             console.log("response.data._embedded.players: ", response.data._embedded.players);
             setPlayers(response.data._embedded?.players || []); //either populkate the array or if data is missing set an empty array
@@ -34,17 +38,21 @@ const PlayersTable = () => {
     useEffect(() => {
         fetchPlayers();
     }, []);
+
+    // handles form submission for create / update players
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         try {
             if (isEditing) {
+                // Updating existing player with PUT request
                 const playersId = extractIdFromLink(currentPlayer);
                 const response = await axios.put(
                     `http://localhost:8080/api/players/${playersId}`,
                     currentPlayer,
 
                 );
+                // if update is successful, fetch players again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchPlayers();
                     setIsDialogOpen(false);
@@ -52,6 +60,7 @@ const PlayersTable = () => {
                     setIsEditing(false);
                 }
             } else {
+                // Creating new player with POST request
                 const response = await axios.post(
                     'http://localhost:8080/api/players',
                     currentPlayer,
@@ -62,6 +71,7 @@ const PlayersTable = () => {
                         }
                     }
                 );
+                // if creation is successful, fetch players again, close dialog and reset state
                 if (response.status === 201 || response.status === 200) {
                     await fetchPlayers();
                     setIsDialogOpen(false);
@@ -75,17 +85,24 @@ const PlayersTable = () => {
             setLoading(false);
         }
     };
+
+    // handles deletion of a player
     const handleDelete = async (player) => {
+        // hit them with the are you sure buddy
         if (window.confirm('Are you sure you want to delete this player?')) {
             setLoading(true);
             try {
+                // get player ID for deleting the player
                 const playersId = extractIdFromLink(player); // need id to delete the player
+                // if no ID, throw an error
                 if (!playersId) {
                     throw new Error('Could not find player ID');
                 }
+                // delete request to the backend
                 const response = await axios.delete(
                     `http://localhost:8080/api/players/${playersId}`,
                 );
+                // if delete is successful, fetch players again, close dialog and reset state
                 if (response.status === 200 || response.status === 204) {
                     await fetchPlayers();
                     setError(null);
@@ -98,6 +115,8 @@ const PlayersTable = () => {
             }
         }
     };
+    
+    // opens the edit dialog for a player
     const openEditDialog = (player) => {
         setCurrentPlayer({
             ...player,
@@ -107,6 +126,7 @@ const PlayersTable = () => {
         setIsDialogOpen(true);
     };
 
+    // opens the create dialog for a player
     const openCreateDialog = () => {
         setCurrentPlayer({ name: '' });
         setIsEditing(false);
